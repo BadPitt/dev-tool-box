@@ -1,0 +1,15 @@
+{
+  "name": "DevToolbox",
+  "version": "0.0.1",
+  "description": "Extension with most frequently used developer's tools",
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_page": "src/options/options.html",
+  "manifest_version": 2
+}

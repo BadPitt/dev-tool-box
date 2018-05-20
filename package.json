@@ -1,0 +1,24 @@
+{
+  "name": "DevToolbox",
+  "version": "0.0.1",
+  "description": "Extension with most frequently used developer's tools",
+  "private": true,
+  "scripts": {
+    "start": "webpack --config webpack.config.js",
+    "package-extension": "pack-zip"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "jsonschema": "^1.2.4",
+    "pack-zip": "^0.2.2",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4",
+    "babel-loader": "^7.1.4"
+  }
+}
