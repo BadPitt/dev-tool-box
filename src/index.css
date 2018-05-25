@@ -1,5 +1,14 @@
 body {
     height: 460px;
     width: 300px;
-    padding:5px;
+    padding:0;
+}
+textarea {
+    resize: none;
+}
+h2 {
+    color: #777;
+    font-weight: 300;
+    line-height: 0.9em;
+    font-size: 1.55rem;
 }

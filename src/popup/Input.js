@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-class Schema extends Component {
+class Input extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			schemaValue: ''
+			inputValue: ''
 		};
 	}
 
@@ -13,21 +13,25 @@ class Schema extends Component {
 		return (
 			<div className='shadow-sm my-2 bg-white rounded flex-fill'>
 				<div className='card-header'>
-				<h2 title="schema"
-					className='card-subtitle text-center'>Schema</h2>
+					<h2 title="source"
+						className='card-subtitle text-center mt-md-1'>Source</h2>
 				</div>
 				<div className="input-group p-1">
-					<textarea className="form-control rounded-0"
-							  id="schema-input"
-							  value={this.state.schemaValue}
+					<textarea className="form-control"
+							  id="source-input rounded-0"
+							  value={this.state.inputValue}
 							  onChange={this.onUpdateValue.bind(this)}
-							  aria-label="Schema"></textarea>
+							  aria-label="Source"></textarea>
 				</div>
-				{/*<input type="text"
-					   id="schema-input"
-					   value={this.state.schemaValue}
+				{/*<div>
+				<h2 title="source"
+					className='card-subtitle'>SOURCE</h2>
+				<input type="text"
+					   id="source-input"
+					   value={this.state.inputValue}
 					   onChange={this.onUpdateValue.bind(this)}
-					   className='input-group'/>*/}
+					   className='input-group'/>
+			</div>*/}
 			</div>
 		);
 	};
@@ -35,13 +39,13 @@ class Schema extends Component {
 	onUpdateValue(e) {
 		this.props.stateCallback(e.target.value);
 		this.setState({
-			schemaValue: e.target.value
+			inputValue: e.target.value
 		});
 	}
 }
 
-Schema.propTypes = {
+Input.propTypes = {
 	stateCallback: PropTypes.func.isRequired
 };
 
-export default Schema;
+export default Input;
