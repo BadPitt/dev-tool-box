@@ -25,11 +25,11 @@ module.exports = {
 	devtool: "source-map",
 
 	// alias for local loader
-	resolveLoader: {
-		alias: {
-			'manifest-loader': path.join(__dirname, 'src', 'ManifestPlugin'),
-		},
-	},
+	// resolveLoader: {
+	// 	alias: {
+	// 		'manifest-loader': path.join(__dirname, 'src', 'ManifestPlugin'),
+	// 	},
+	// },
 
 	module: {
 		rules: [

@@ -5,10 +5,22 @@ body {
 }
 textarea {
     resize: none;
+    border: none !important;
 }
 h2 {
     color: #777;
     font-weight: 300;
     line-height: 0.9em;
     font-size: 1.55rem;
+}
+.ff-container {
+    height: 100%;
+}
+.ff-header {
+    position: relative;
+    height: 25%;
+}
+.ff-body {
+    position: relative;
+    height: 75%;
 }

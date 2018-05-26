@@ -1,80 +1,77 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Validator} from 'jsonschema';
-import addressSchema from '../address-schema';
-import address from '../address';
-import Schema from './Schema';
-import Input from './Input';
+import JSONValidationWidget from './JSONValidationWidget';
+import RegExpWidget from './RegExpWidget';
+import Utils from '../utils';
 
 class Popup extends Component {
 	constructor(props) {
 		super(props);
-		let popup = this;
 		this.state = {
-			schemaValue: '',
-			updateSchemaCallback: function(schema) {
-				popup.state.schemaValue = schema;
-				popup.setState(popup.state);
-			},
-			inputValue: '',
-			updateInputCallback: function(input) {
-				popup.state.inputValue = input;
-				popup.setState(popup.state);
-			}
+			tabs: [
+				{
+					id: 'nav-validation-tab',
+					controls: 'nav-json-validation',
+					title: 'JSON Validation',
+					content: <JSONValidationWidget/>
+				},
+				{
+					id: 'nav-regexp-tab',
+					controls: 'nav-regexp',
+					title: 'RegExp checker',
+					content: <RegExpWidget/>
+				}
+			],
+			activeTab: 'nav-validation-tab'
 		};
 	}
 
 	render() {
+		let self = this;
+		let tabs = self.state.tabs.map( function(tab) {
+			return <a className={self.state.activeTab === tab.id ?
+				"nav-item nav-link active" :
+				"nav-item nav-link"}
+					  id={tab.id}
+					  key = {tab.id}
+					  data-toggle="tab"
+					  href={'#' + tab.controls}
+					  onClick={self.onTabClick.bind(self)}
+					  role="tab"
+					  aria-controls={tab.controls}
+					  aria-selected={self.state.activeTab === tab.id}>{tab.title}</a>;
+		});
+		//console.log(tabs);
+		let tabContents = self.state.tabs.map( function(tab) {
+			return <div className={self.state.activeTab === tab.id ?
+				"d-flex flex-column flex-fill tab-pane fade show active" :
+				"							  tab-pane fade"}
+						id={tab.controls}
+						key={tab.controls}
+						role="tabpanel"
+						aria-labelledby={tab.id}>{tab.content}</div>;
+		});
 		return (
-			<div className='jumbotron d-flex' style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, marginBottom: 0, height: "-webkit-fill-available"}}>
-				<div className='container p-2 d-flex flex-column flex-fill'>
-					<Schema stateCallback={this.state.updateSchemaCallback}/>
-					<Input stateCallback={this.state.updateInputCallback} />
-					<button id="validateButton"
-							onClick={this.validate.bind(this)}
-							className='btn btn-primary fixed-bottom btn-block btn-lg rounded-0'>Validate</button>
-					<div className={this.state.status === 'ERROR' ? 'alert alert-danger py-1' :
-						this.state.status === 'VALID' ? 'alert alert-success': ''}
-						 role='alert'
-						 hidden={this.state.status !== 'ERROR' &&
-					this.state.status !== 'VALID'}>{
-						this.state.status === 'ERROR' ? this.state.errorMessage :
-						this.state.status === 'VALID' ? 'Valid!' : ''}</div>
+			<div className='jumbotron d-flex flex-column'
+				 style={{padding: 0, marginBottom: 0, height: "-webkit-fill-available"}}>
+				<nav className='d-flex'>
+					<div className="nav nav-tabs" id="nav-tab" role="tablist">
+						{tabs}
+					</div>
+				</nav>
+				<div className="tab-content d-flex flex-column flex-fill"
+					 id="nav-tabContent">
+					{tabContents}
 				</div>
 			</div>
 		);
 	}
 
-	validate() {
-		let state = _clone(this.state);
-		try {
-			let input = JSON.parse(this.state.inputValue); //JSON.parse(document.getElementById('source-input').value);
-			let schema = JSON.parse(this.state.schemaValue); //document.getElementById('schema-input').value;
-			let validator = new Validator();
-			console.dir(schema);
-			console.dir(input);
-			console.log(`schema: ${schema}\ninput: ${input}\nresult:${validator.validate(input, schema, {throwError: true})}`);
-
-			state.status = 'VALID';
-			this.setState(state);
-		} catch (e) {
-			console.log(e);
-			state.status = 'ERROR';
-			state.errorMessage = e.message;
-			this.setState(state);
-		}
+	onTabClick(e) {
+		let state = Utils.shallowCopy(this.state);
+		state.activeTab = e.target.id;
+		this.setState(state);
 	}
 }
-
-function _clone(obj) {
-	let result = {};
-	for (let prop in obj) {
-		if (obj.hasOwnProperty(prop)) {
-			result[prop] = obj[prop];
-		}
-	}
-	return result;
-}
-
 
 export default Popup;
