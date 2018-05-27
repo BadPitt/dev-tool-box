@@ -27,8 +27,8 @@ class InputWidget extends Component {
 		);
 	};
 
-	onUpdateValue(e) {
-		this.props.stateCallback(e.target.value);
+	onUpdateValue(e={target:{value:''}}) {
+		this.props.onInputChange(e.target.value);
 		this.setState({
 			inputValue: e.target.value
 		});
@@ -36,7 +36,7 @@ class InputWidget extends Component {
 }
 
 InputWidget.propTypes = {
-	stateCallback: PropTypes.func.isRequired
+	onInputChange: PropTypes.func.isRequired
 };
 
 export default InputWidget;

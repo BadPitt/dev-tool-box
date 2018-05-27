@@ -43,5 +43,6 @@ export default {
 			throw new Error("Doesn't match");
 		}
 		return result;
-	}
+	},
+	replaceAllDotsInRegexp
 };
