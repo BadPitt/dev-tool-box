@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Validator} from 'jsonschema';
-import Utils from '../../utils';
+import Utils from '../utils';
 import InputWidget from '../InputWidget';
 import Alert from '../Alert';
 import Status from '../ExecutionStatus';
@@ -28,9 +28,9 @@ class JSONValidationWidget extends Component {
 			<div className='d-flex flex-column flex-fill'>
 				<div className='p-2 container d-flex flex-column flex-fill ff-container'>
 					<InputWidget title="Schema"
-								 stateCallback={this.state.updateSchemaCallback}/>
+								 onInputChange={this.state.updateSchemaCallback}/>
 					<InputWidget title="Source"
-								 stateCallback={this.state.updateInputCallback}/>
+								 onInputChange={this.state.updateInputCallback}/>
 					<Alert status={this.state.status}
 						   errorMessage={this.state.errorMessage}/>
 				</div>

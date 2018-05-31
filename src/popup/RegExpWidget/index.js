@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Utils from '../../utils';
+import Utils from '../utils';
 import InputWidget from '../InputWidget';
 import Alert from '../Alert';
 import RegExpValidator from './RegExpValidator';
@@ -28,9 +28,9 @@ class RegExpWidget extends Component {
 			<div className='d-flex flex-column flex-fill'>
 				<div className='p-2 container d-flex flex-column flex-fill ff-container'>
 					<InputWidget title="RegExp"
-								 stateCallback={this.state.updateRegExpCallback}/>
+								 onInputChange={this.state.updateRegExpCallback}/>
 					<InputWidget title="Source"
-								 stateCallback={this.state.updateInputCallback}/>
+								 onInputChange={this.state.updateInputCallback}/>
 					<Alert status={this.state.status}
 						   errorMessage={this.state.errorMessage}
 						   successMessage="Matches!"/>

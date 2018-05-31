@@ -1,4 +1,4 @@
-import Utils from '../../utils';
+import Utils from '../../popup/utils';
 
 describe("Utils function tests", () => {
 	describe("shallow copy tests", () => {

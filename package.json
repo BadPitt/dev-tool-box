@@ -7,6 +7,7 @@
     "start-react": "react-scripts start",
     "build": "react-scripts build",
     "build-webpack": "webpack --config webpack.config.js",
+    "build-webpack-production": "webpack --config webpack.config.js --env.production",
     "test": "react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "package-extension": "pack-zip"
@@ -21,6 +22,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "jasmine-core": "^3.1.0",
     "mocha": "^5.2.0",
