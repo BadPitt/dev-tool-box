@@ -14,10 +14,6 @@ class Options extends Component {
 				name: 'json validation'
 			},
 			{
-				id: 'XML_VALIDATION',
-				name: 'xml validation'
-			},
-			{
 				id: 'REGEXP',
 				name: 'regexp checking'
 			}];
