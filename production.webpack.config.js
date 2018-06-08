@@ -2,6 +2,7 @@ let webpack = require('webpack');
 let path = require('path');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
+// let ZipPlugin = require('zip-webpack-plugin');
 let WebExtensionPlugin = require('./src/WebExtensionPlugin');
 let manifest = require('./manifest.json');
 
@@ -22,9 +23,9 @@ module.exports = function (env, argv) {
 		},
 
 		//mode: env.production ? 'production' : 'development',
-		devtool: 'eval',
+		// devtool: 'eval',
 
-		watch: true,
+		watch: !env.production,
 		watchOptions: {
 			aggregateTimeout: 100
 		},
@@ -43,6 +44,9 @@ module.exports = function (env, argv) {
 			]
 		},
 		plugins: [
+			// new ZipPlugin({
+			// 	path: 'build'
+			// }),
 			new webpack.optimize.CommonsChunkPlugin({
 				name: "vendor",
 				// filename: "vendor.js"
@@ -59,13 +63,13 @@ module.exports = function (env, argv) {
 				allChunks: true
 			}),
 			new WebExtensionPlugin(
+				__dirname,
 				{
 					manifestData: manifest
 				},
 				{
 					path: 'src/images/',
 					pattern: /\.(jpe?g|png|gif|svg)$/i,
-					root: __dirname,
 					outputDirectory: 'images'
 				}),
 			new HtmlWebpackPlugin({
@@ -81,7 +85,7 @@ module.exports = function (env, argv) {
 				chunks: ['options']
 			}),
 			new webpack.optimize.UglifyJsPlugin({
-				compress: 'optimize-minimize'
+				compress: true
 			})
 		]
 	}

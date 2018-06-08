@@ -1,6 +1,6 @@
 {
   "name": "DevToolbox",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Extension with most frequently used developer's tools",
   "private": true,
   "scripts": {
@@ -9,10 +9,10 @@
     "build-webpack": "webpack --config webpack.config.js",
     "build-webpack-production": "webpack --config webpack.config.js --env.production",
     "test": "react-scripts test --env=jsdom --coverage",
-    "eject": "react-scripts eject",
-    "package-extension": "pack-zip"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "archiver": "^2.1.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",

@@ -1,16 +1,22 @@
 const FS = require('fs');
 const Path = require('path');
+const archiver = require('archiver');
 
-function apply(manifestOptions, imagesOptions, compiler) {
+function apply(root, manifestOptions, imagesOptions, compiler) {
 	compiler.plugin('emit', function (compilation, callback) {
 
 		console.log("ManifestPlugin starts");
 
-		processImages(compilation, imagesOptions);
+		processLicense(compilation, root);
+
+		processImages(compilation, root, imagesOptions);
 
 		processManifest(compilation, manifestOptions);
 
 		callback();
+	});
+	compiler.plugin('done', function() {
+		processZipArchive(root);
 	});
 }
 
@@ -29,8 +35,57 @@ function processManifest(compilation, manifestOptions) {
 	};
 }
 
-function processImages(compilation, imagesOptions) {
-	let {path, pattern, root, outputDirectory=''} = imagesOptions;
+function processLicense(compilation, root) {
+	let LICENSE = Path.sep + 'LICENSE';
+	var license = FS.readFileSync(root + LICENSE);
+
+	compilation.assets[LICENSE] = {
+		source: function () {
+			return license;
+		},
+		size: function () {
+			return license.length;
+		}
+	};
+}
+
+
+/**
+ * @see archiver documentation https://www.npmjs.com/package/archiver
+ *
+ * @param root	__dirname
+ */
+function processZipArchive(root) {
+	let target = root+ '/build/';
+	// create a file to stream archive data to.
+	let output = FS.createWriteStream(target + 'DevToolBox.zip');
+
+	let archive = archiver('zip', {
+		zlib: { level: 9 } // Sets the compression level.
+	});
+
+	// listen for all archive data to be written
+	// 'close' event is fired only when a file descriptor is involved
+	output.on('close', function() {
+		console.log(archive.pointer() + ' total bytes in archive');
+	});
+	output.on('end', function() {
+		console.log('Data has been drained');
+	});
+	archive.on('error', function(err) {
+		console.log('error has occurred!');
+		console.log(err);
+	});
+	// pipe archive data to the file
+	archive.pipe(output);
+	archive.glob('**/*[!.zip]', {cwd:'build'});
+	// archive.directory(target, false);
+	archive.finalize();
+	console.log('archive building is done!');
+}
+
+function processImages(compilation, root, imagesOptions) {
+	let {path, pattern, outputDirectory = ''} = imagesOptions;
 	if (!path.match(`^${Path.sep}`)) {
 		path = Path.sep + path;
 	}
@@ -77,30 +132,31 @@ function getImages(filename, pattern, root = Path.sep) {
 	} else {
 		images[root + filename] = {
 			name: filename,
-			file:FS.readFileSync(root + filename)
+			file: FS.readFileSync(root + filename)
 		};
 	}
 	return images;
 }
 
 /**
+ * @param root - __dirname
+ *
  * @param manifestOptions - container object for manifest options
- * 		  manifestOptions.manifestFileName  - name of manifest file
- * 		  manifestOptions.manifestData - manifest
+ *          manifestOptions.manifestFileName  - name of manifest file
+ *          manifestOptions.manifestData - manifest
  *
  * @param imagesOptions - container object for images options
- * 		  imagesOptions.path - path to assets
- * 		  imagesOptions.pattern - /\.png/ for example
- * 		  imagesOptions. root - __dirname
+ *          imagesOptions.path - path to assets
+ *          imagesOptions.pattern - /\.png/ for example
  *
  * @returns {{apply: any}}
  */
-module.exports = function (manifestOptions, imagesOptions) {
+module.exports = function (root, manifestOptions, imagesOptions) {
 
 	console.dir(manifestOptions);
 	console.dir(imagesOptions);
 
 	return {
-		apply: apply.bind(this, manifestOptions, imagesOptions)
+		apply: apply.bind(this, root, manifestOptions, imagesOptions)
 	};
 };
