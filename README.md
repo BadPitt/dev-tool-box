@@ -18,6 +18,10 @@ Error result:\
 
 ## Installing
 
+#### Chrome Web Store
+Go to the [Chrome web store](https://chrome.google.com/webstore/detail/devtoolbox/fmebecnmccahnbkaiihmiimpkbagadjb) and click "add"
+
+#### Manual installing
 For manual installing just do 5 steps:
 
 - `git clone https://github.com/BadPitt/dev-tool-box.git`
