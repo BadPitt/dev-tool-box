@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "6"
+cache:
+  directories:
+    - "node_modules"
+addons:
+  sonarcloud:
+    organization: badpitt-github
+    token:
+      secure: kvajw5wOy60xYBU4MGSN8CuOchwK9rtEsva7QnCPYeoynogaXnj3SE3FU8ULgse6kU6TCDd+Dj1txsNtpnIY/8lCdT+uZnEvM8rsU1l4XUdkchXvqO99kKtsWHvYR/KnrbgJsR4YiKDblRLGmKuJsMrf+3H8Tg3WlGiuPQYQgXXxtt+JDjbBVATY5AnL/3rb7Mi32+fu7v3yo55V9iUzOuxrG2qm7U7acaEyT1GPB35vJHTy6TlLoB4cvjKpeCc7PeLyOdhaBadayRWyZeE75ZRlzv6JWI4Ikscgm2keenHPTxuJcRdaYKvJ7EH3DIYC0Nv6eMGTfUeWeuYkegGm4Yl2UCabJVv0VmDO8ufodf04T1+F4p1o/Lg8rMMwmu893uHtNqJAzQjUAptGazTkVrpDhqTOPtZOqQv0qrnXlNz72IWYTr2W5WZ4FqKYP32kcTBqotJNQZeHW3xoqJPjtNvPmz7ft6BpQp1nQ6pxG8CtCKU979AKJu6Nf/1oJvyiZKmhqVkPqip3xDqeQKzSsEJh6WpMDzrwyf6vvNeXekqMFwUDXW2YkrLftaQi5WLSwF98S4S6NFSPk6E7nIU4+Df36o4KlBTRgiKRx3I1n1ptEtaXuL1qF8H75GuM5TzNPC17DKgEXRHp+ifQG7YN5xnAL/41FQDMYWAnHrAH15o=
+script:
+- npm test
+- npm run build-webpack-production
+- sonar-scanner
+deploy:
+  provider: releases
+  api_key:
+      secure: f4hDuKMnL8lM9iNkLeA0mut4hFMLBkBGX3kMzIIsuZJl75GZiHAAbMqoVklT0bu4KoD8AhomXO+mPPhnYoV5oZlGQqmTI54XCen8bbFwZ1sNh7IrWphNYFSgESGwRqcDXazMmhPUaOLNRUCqYhWW7uVxlpD41yqsE+WTsdovt4zMkefixvE10O0zbI4564QR5GUDkcCAKWZzos/Ok06DZEULRiZSgwndOccHC97EYVcWgohJdy31/5LolLRfaU1zNqc5JBFwnjiNBRweSB0A5enEJLXYAYFrQweckPuEa5wqf9kujvoL+gZTzN7sGvaIxti6FvisRkyBB2CeN0PqbqVg21uqXFkMft/tsPSn367EWKJl7rE978CPBgzSzLZrrHW4nWP1OKLgeuDHwH0TYVR0oEU506xvFkRS9bG8hW72/vCBtPW0LfeCwMr8LEXs9jMSZ2j/5pm+Z4COCAR1l2+pn3iXX/wBqGcroWOge2RMUdw+S2iApwOXtVbED5ixd3pqff0YwzC6EinNC/VbjI+VYmYzTH7SSPu6NHmq8FZTiudAvJ0VeIZ9hKobOwWLqjYN7Clh51z9hFya9R3ZS2hnO2g/RGyqKGBzaKU4fXLCFjXlka5DkgSXsTLIMPczpkrAyJQZxgH+wor5kkaoc+Da4Dwhegyd2xF6ZkPdIIU=
+  file: build/DevToolBox.zip
+  skip_cleanup: true
+  on:
+    tags: true

@@ -63,6 +63,7 @@ module.exports = function () {
 				allChunks: true
 			}),
 			new WebExtensionPlugin(
+				__dirname,
 				{
 					manifestData: manifest
 				},

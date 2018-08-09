@@ -1,4 +1,6 @@
 # DevToolbox
+[![Build Status](https://travis-ci.org/BadPitt/dev-tool-box.svg?branch=master)](https://travis-ci.org/BadPitt/dev-tool-box)
+
 It's browser's extension for developer's usual tasks such a JSON validation and RegExp checking.
 
 [json-valid]: https://github.com/BadPitt/dev-tool-box/raw/master/docs/images/screen-json-valid.jpg "Success result of json validation"
@@ -25,7 +27,7 @@ Go to the [Chrome web store](https://chrome.google.com/webstore/detail/devtoolbo
 For manual installing just do 5 steps:
 
 - `git clone https://github.com/BadPitt/dev-tool-box.git`
-- `npm run buil-webpack-production` \
+- `npm run build-webpack-production` \
 (node version 6.0.0)
 - open "Extensions" tab in Chrome or Chromium \
 ![alt text][ext-tab-menu]
